@@ -3,6 +3,8 @@ import { CreateWorkOrderUseCase } from '../application/create-work-order.use-cas
 import { GetWorkOrderByIdUseCase } from '../application/get-work-order-by-id.use-case.js';
 import { WorkOrderNotFoundFilter } from './filters/work-order-not-found.filter.js';
 import { AssignTechnicianUseCase } from '../application/assign-technician.use-case.js';
+import { StartWorkOrderUseCase } from "../application/start-work-order.use-case.js";
+import { CompleteWorkOrderUseCase } from '../application/complete-work-order.use-case.js';
 
 @Controller('work-orders')
 @UseFilters(WorkOrderNotFoundFilter)
@@ -10,7 +12,9 @@ export class WorkOrdersController {
     constructor(
         private readonly createWorkOrderUseCase: CreateWorkOrderUseCase,
         private readonly getWorkOrderByIdUseCase: GetWorkOrderByIdUseCase,
-        private readonly assignTechnicianUseCase: AssignTechnicianUseCase
+        private readonly assignTechnicianUseCase: AssignTechnicianUseCase,
+        private readonly startWorkOrderUseCase: StartWorkOrderUseCase,
+        private readonly completeWorkOrderUseCase: CompleteWorkOrderUseCase
     ) { }
 
     @Get(':id')
@@ -40,13 +44,36 @@ export class WorkOrdersController {
         @Body()
         body: {
             wordOrderId: string,
-            technicianId:  string
+            technicianId: string
         }
     ) {
-       await this.assignTechnicianUseCase.execute(body.wordOrderId, body.technicianId);
-       return {
+        await this.assignTechnicianUseCase.execute(body.wordOrderId, body.technicianId);
+        return {
             message: 'Technician assigned successfully'
-       }
+        }
+    }
+
+    @Patch(':id/start')
+    async startWorkOrder(
+        @Body()
+        body: {
+            workOrderId: string
+        }
+    ) {
+        await this.startWorkOrderUseCase.execute(body.workOrderId);
+        return {
+            message: 'Work Order started sucessfully'
+        }
+    }
+
+    @Patch(':id/complete')
+    async completeWorkOrder(
+        @Body()
+        body: {
+            workOrderId: string
+        }
+    ) {
+        await this.completeWorkOrderUseCase.execute(body.workOrderId);
     }
 
 }
