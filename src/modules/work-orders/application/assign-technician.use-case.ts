@@ -8,7 +8,7 @@ export class AssignTechnicianUseCase{
 
     async execute(
         workOrderId: string,
-        technicianId: string
+        technicianId: number
     ){
         const workOrder = await this.workOrderRepository.findById(workOrderId);
         if (!workOrder) {

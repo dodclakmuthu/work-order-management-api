@@ -44,7 +44,7 @@ export class WorkOrdersController {
         @Body()
         body: {
             wordOrderId: string,
-            technicianId: string
+            technicianId: number
         }
     ) {
         await this.assignTechnicianUseCase.execute(body.wordOrderId, body.technicianId);
