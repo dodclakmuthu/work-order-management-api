@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: fmm-postgres
+
+    environment:
+      POSTGRES_USER: fmm_user
+      POSTGRES_PASSWORD: fmm_password
+      POSTGRES_DB: fmm_db
+
+    ports:
+      - "5434:5432"
+
+    volumes:
+      - fmm_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  fmm_postgres_data:

@@ -10,7 +10,7 @@ export enum WorkOrderStatus {
 
 export class WorkOrder {
     private status: WorkOrderStatus;
-    private assignedTechnicianId?: string;
+    private assignedTechnicianId?: number;
     private domainEvents: object[] = [];
 
     constructor(
@@ -18,7 +18,7 @@ export class WorkOrder {
         public readonly title: string,
         public readonly description: string,
         status: WorkOrderStatus,
-        assignedTechnicianId?: string
+        assignedTechnicianId?: number
     ) {
         this.status = status;
         this.assignedTechnicianId = assignedTechnicianId;
@@ -28,7 +28,7 @@ export class WorkOrder {
         return new WorkOrder(id, title, description, WorkOrderStatus.REPORTED)
     }
 
-    assignTechnician(technicianId: string): void {
+    assignTechnician(technicianId: number): void {
         if (this.status !== WorkOrderStatus.REPORTED) {
             throw new InvalidWorkOrderStateException(`Cannot assign technician when work order status is ${this.status}`);
         }
@@ -36,7 +36,7 @@ export class WorkOrder {
         this.status = WorkOrderStatus.ASSIGNED;
     }
 
-    getAssignedTechnicianId(): string | undefined {
+    getAssignedTechnicianId(): number | undefined {
         return this.assignedTechnicianId;
     }
 
