@@ -12,10 +12,15 @@ import { WorkorderCompletedHandler } from "./application/event-handlers/work-ord
 import { NotificationPort } from "./application/ports/notification.port.js";
 import { ConsoleNotificationAdapter } from "./infrastructure/notification/console-notification.adapter.js";
 import { PrismaWorkOrderRepository } from "./infrastructure/persistence/prisma-work-order-repository.js";
+import { DatabaseModule } from "../../shared/infrastructure/database/database.module.js";
 
 @Module({
     controllers: [
         WorkOrdersController,
+    ],
+
+    imports: [
+        DatabaseModule
     ],
 
     providers: [
